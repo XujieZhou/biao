@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<style>
+	canvas{
+		border: 1px solid #000;
+		display: block;
+		position: absolute;
+		top: 0;
+		bottom:0;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+	}
+</style>
+<body>
+	<canvas id="canvas" width="600" height="600">
+		
+	</canvas>
+</body>
+</html>
+<script>
+
+	var canvas=document.getElementById('canvas');
+	var ctx=canvas.getContext("2d");
+// 秒针	
+ 	function miaozhen(){
+ 		ctx.save();
+ 		var date=new Date();
+ 		var s=date.getSeconds();
+ 		ctx.rotate(Math.PI/30*s);
+		ctx.beginPath();
+		ctx.arc(0,0,10,0,Math.PI*2);
+		ctx.moveTo(0,20);
+		ctx.lineTo(0,20);
+		ctx.moveTo(0,-20);
+		ctx.lineTo(0,-120);
+		ctx.closePath();
+		ctx.stroke();
+		ctx.restore();
+ 	}
+ 	// 分针
+ 	function fenzhen(){
+ 		ctx.save();
+ 		ctx.lineWidth=4;
+ 		var date=new Date();
+ 		var s=date.getSeconds();
+ 		var m=date.getMinutes() ;
+ 		var deg=(Math.PI/30)*m + (Math.PI/1800)*s;
+ 		ctx.rotate(deg);
+		ctx.beginPath();
+		ctx.arc(0,0,10,0,Math.PI*2);
+		ctx.moveTo(0,20);
+		ctx.lineTo(0,20);
+		ctx.moveTo(0,-20);
+		ctx.lineTo(0,-100);
+		ctx.closePath();
+		ctx.stroke();
+		ctx.restore();
+ 	}
+ 	//时针
+ 	function shizhen(){
+ 		ctx.save();
+ 		ctx.lineWidth=8;
+ 		var date=new Date();
+ 		var m=date.getMinutes();
+ 		var h=date.getHours() ;
+ 		var s=date.getSeconds();
+ 		h = h>=12 ? h-12 : h;
+ 		var deg=(Math.PI/6)*h + (Math.PI/360)*m + (Math.PI/21600)*s;
+ 		ctx.rotate(deg);
+		ctx.beginPath();
+		ctx.arc(0,0,10,0,Math.PI*2);
+		ctx.moveTo(0,20);
+		ctx.lineTo(0,20);
+		ctx.moveTo(0,-20);
+		ctx.lineTo(0,-80);
+		ctx.closePath();
+		ctx.fill();
+		ctx.stroke();
+		ctx.restore();
+ 	}
+// 画表盘
+	function pan(){
+		ctx.save();
+		ctx.beginPath();
+		for (var i = 0; i < 60; i++) {
+			if (i%5===0) {
+				ctx.moveTo(0,-120);
+			}
+			else{
+				ctx.moveTo(0,-140);
+			}
+			ctx.lineTo(0,-150);
+			ctx.rotate(Math.PI/180*6);
+		}			
+		ctx.closePath();
+		ctx.stroke();
+		ctx.restore();
+	}
+	function render(){
+		ctx.clearRect(0,0,600,600);	
+		ctx.save();	
+		ctx.translate(10*30,10*30);
+		miaozhen();
+		fenzhen();
+		shizhen();
+		pan();
+		qiu();
+		ctx.restore();
+		ctx.save();
+		for(i=0;i<50;i++){
+			var x=Math.random()*600;
+			var y=Math.random()*600;
+			var b=Math.random()*0.5;
+			star(x,y,b);
+		}
+		ctx.restore();
+	}
+	render();
+	var t=setInterval(render,20);
+//球
+    var angle=0;
+   function qiu(){
+   	   ctx.save();
+	   ctx.beginPath();
+	   ctx.arc(0,0,200,Math.PI/2*3,Math.PI/180*(270+angle));
+	   ctx.moveTo(0,0);
+	   ctx.closePath();
+	   ctx.stroke();
+	   ctx.restore();
+	   ctx.save();
+	   ctx.rotate(Math.PI/180*angle);
+	   ctx.beginPath();
+	   ctx.arc(0,-200,10,0,Math.PI*2);
+	   ctx.closePath();
+	   ctx.fill();
+	   ctx.restore();
+	   angle+=1;
+	   if(angle==360){
+	   	angle=0;
+	   }
+   }
+//五角星
+function star (x,y,b) {
+		ctx.save();
+		ctx.translate(x,y);
+		ctx.scale(b,b);
+		for(var i=0;i<5;i++){
+			ctx.beginPath();
+			ctx.moveTo(7.6,19.7);
+			ctx.lineTo(42.1,19.7);  
+			ctx.lineTo(14.3,39.9);  
+			ctx.lineTo(24.8,7.1);  
+			ctx.lineTo(35.6,39.9);  
+			ctx.lineTo(7.6,19.7);
+			
+			ctx.closePath();
+			ctx.stroke();
+			ctx.fillStyle='yellow';
+			ctx.fill();
+		}
+		ctx.restore();
+	}
+</script>

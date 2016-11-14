@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas</title>
+	</head>
+	<style>canvas {
+	border: 1px solid #000;
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: auto;
+	margin-top: 50px;
+}</style>
+	<body>
+		<!--不可用css设置宽高-->
+		<canvas width="450" height="450" id="canvas">
+			
+		</canvas>
+	</body>
+</html>
+<script type="text/javascript">
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+//	1.坐标系统
+//	2.路径
+//	3.描绘或填充路径
+
+//	ctx.beginPath();
+//	ctx.moveTo(200,200);//不会产生路径
+//	ctx.lineTo(100,100);
+//	ctx.lineTo(300,100);
+//	ctx.lineTo(200,200);
+//	ctx.closePath();
+//	
+////	ctx.fill();
+//	ctx.stroke();
+
+
+
+
+//function drawqipan(){
+//	ctx.beginPath();
+//	for(var i = 0; i < 15; i++) {
+//		ctx.moveTo(15.5, 15.5 + i * 30);
+//		ctx.lineTo(435.5, 15.5 + i * 30);
+//		ctx.moveTo(15.5 + i * 30, 15.5);
+//		ctx.lineTo(15.5 + i * 30, 435.5);
+//	}
+//	ctx.closePath();
+//	ctx.stroke();
+//}
+//function drawcircle(){
+//	ctx.beginPath();
+//	ctx.arc(7.5*30,7.5*30,60,0,Math.PI/180*angle);
+//	ctx.lineTo(7.5*30,7.5*30);
+//	ctx.closePath();
+//	ctx.fill();
+//}
+//var angle=0;
+//function reder(){
+//	var timerId=setInterval(function(){
+//		ctx.clearRect(0,0,450,450);
+//		drawqipan();
+//		drawcircle();
+//		if(angle===360){
+//			clearInterval(timerId)
+//		}
+//		angle+=1;
+//	},10);
+//}
+//reder();
+
+
+
+var dr=0;
+function circle(){
+	ctx.save();
+	ctx.beginPath();
+	ctx.rotate(Math.PI/180*dr);
+	ctx.arc(0,-180,10,0,Math.PI*2);
+	ctx.moveTo(0,180);
+	ctx.closePath();
+	ctx.fill();
+	ctx.restore();
+	dr+=1;
+}
+function xian(){
+	ctx.save();
+	ctx.beginPath();
+	ctx.rotate(-90*Math.PI/180);
+	ctx.arc(0,0,180,0,Math.PI/180*dr);
+	ctx.moveTo(0,-180);
+	ctx.closePath();
+	ctx.stroke();
+	ctx.restore();
+	dr+=1;
+	if(dr===360){
+		dr=0;
+	}
+}
+
+function wujiao(x,y,r){
+	ctx.save();
+	ctx.beginPath();
+	ctx.moveTo(x,y);
+	ctx.lineTo(x+6,y+2);
+	ctx.lineTo(x+8,y+8);
+	ctx.lineTo(x+10,y+2);
+	ctx.lineTo(x+16,y-2);
+	ctx.lineTo(x+10,y-2);
+	ctx.lineTo(x+8,y-8);
+	ctx.lineTo(x+6,y-2);
+	ctx.lineTo(x,y);
+	ctx.closePath();
+	ctx.fillStyle="red",
+	ctx.fill();
+	ctx.restore();
+	ctx.scale(r,r);
+}
+function wj(x,y,r){
+	ctx.save();
+	ctx.translate(x,y);
+	ctx.scale(r,r);
+	ctx.beginPath();
+	for(var i=0;i<5;i++){
+		ctx.beginPath();
+		ctx.moveTo(7.6,19.7);
+		ctx.lineTo(42.1,19.7);  
+		ctx.lineTo(14.3,39.9);  
+		ctx.lineTo(24.8,7.1);  
+		ctx.lineTo(35.6,39.9);  
+		ctx.lineTo(7.6,19.7);
+		ctx.closePath();
+		ctx.fillStyle='yellow';
+		ctx.fill();
+	}
+	ctx.closePath();
+	ctx.restore();
+}
+
+//function wj(x,y,r){
+//	ctx.save();
+//	ctx.beginPath();
+//	ctx.moveTo(x,y);
+//	ctx.lineTo(x+85,y-10);
+//	ctx.lineTo(x+155,y-60);
+//	ctx.lineTo(x+215,y-10);
+//	ctx.lineTo(x+300,y);
+//	ctx.lineTo(x+215,y+50);
+//	ctx.lineTo(x+285,y+113);
+//	ctx.lineTo(x+155,y+83);
+//	ctx.lineTo(x+15,y+113);
+//	ctx.lineTo(x+85,y+50);
+//	ctx.lineTo(x,y);
+//	ctx.closePath();
+//	ctx.fillStyle="red",
+//	ctx.fill();
+//	ctx.restore();
+//	ctx.scale(r,r);
+//}
+
+
+
+function miaozhen(){
+	ctx.save();
+	var date=new Date();
+	var s=date.getSeconds();
+	ctx.rotate(Math.PI/180*6*s);
+	ctx.beginPath();
+	ctx.arc(0,0,10,0,Math.PI*2);
+	ctx.moveTo(0,10);
+	ctx.lineTo(0,40);
+	ctx.moveTo(0,-10);
+	ctx.lineTo(0,-100);
+	ctx.closePath();
+	ctx.stroke();
+	ctx.restore();
+}
+function fenzhen(){
+	ctx.save();
+	var date=new Date();
+	var s=date.getSeconds();
+	var m=date.getMinutes();
+	var deg=(m*60+s)/10*Math.PI/180;
+	ctx.rotate(deg);
+	ctx.beginPath();
+	ctx.arc(0,0,10,0,Math.PI*2);
+	ctx.moveTo(0,10);
+	ctx.lineTo(0,30);
+	ctx.moveTo(0,-10);
+	ctx.lineTo(0,-80);
+	ctx.closePath();
+	ctx.stroke();
+	ctx.restore();
+}
+function shizhen(){
+	ctx.save();
+	var date=new Date();
+	var s=date.getSeconds();
+	var m=date.getMinutes();
+	var h=date.getHours(); 
+	var deg=(h*60*60+m*60+s)/43200*2*Math.PI;
+	ctx.rotate(deg);
+	ctx.beginPath();
+	ctx.arc(0,0,10,0,Math.PI*2);
+	ctx.moveTo(0,10);
+	ctx.lineTo(0,20);
+	ctx.moveTo(0,-10);
+	ctx.lineTo(0,-60);
+	ctx.closePath();
+	ctx.stroke();
+	ctx.restore();
+}
+function pan(){
+	ctx.save();
+	ctx.beginPath();
+	for (var i = 0; i < 60; i++) {
+		if (i%5===0) {
+			ctx.moveTo(0,-120);
+		}
+		else{
+			ctx.moveTo(0,-140);
+		}
+		ctx.lineTo(0,-150);
+		ctx.rotate(Math.PI/180*6);
+	}			
+	ctx.closePath();
+	ctx.stroke();
+	ctx.restore();
+}
+function render(){
+	ctx.clearRect(0,0,450,450);	
+	ctx.save();	
+	ctx.translate(7.5*30,7.5*30);
+	miaozhen();
+	fenzhen();
+	shizhen();
+	pan();
+	circle();
+	xian();
+	ctx.restore();
+	
+	
+	ctx.save();	
+	for (var i=0;i<80;i++) {
+		var x=Math.floor(Math.random()*600);
+		var y=Math.floor(Math.random()*600);
+		var r=Math.random()+0.5;
+		wujiao(x,y,r)
+		wj(x,y,r);
+	}
+	ctx.restore();
+}
+	render();
+	var t=setInterval(render,100);
+
+
+
+
+
+
+
+
+</script>

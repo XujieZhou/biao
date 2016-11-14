@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>style</title>
+	</head>
+	<style>
+		canvas {
+			border: 1px solid #000;
+			position: absolute;
+			left: 0;
+			right: 0;
+			margin: auto;
+			margin-top: 50px;
+		}
+	</style>
+	<body>
+		<canvas width="450" height="450" id="canvas">
+			<img src="2.jpg" hidden  id="tu"/>
+		</canvas>
+	</body>
+</html>
+<script type="text/javascript">
+	var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+	function quchu(){
+		canvas.width="450";
+		canvas.height="450";
+	}
+	
+	
+//	贝塞尔曲线
+//	ctx.beginPath();
+//  ctx.moveTo(75,25);
+//  ctx.quadraticCurveTo(25,25,25,62.5);
+//  ctx.quadraticCurveTo(25,100,50,100);
+//  ctx.quadraticCurveTo(50,120,30,125);
+//  ctx.quadraticCurveTo(60,120,65,100);
+//  ctx.quadraticCurveTo(125,100,125,62.5);
+//  ctx.quadraticCurveTo(125,25,75,25);
+//  ctx.stroke();
+    
+    //二次曲线
+//  ctx.beginPath();
+//  ctx.moveTo(75,40);
+//  ctx.bezierCurveTo(75,37,70,25,50,25);
+//  ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
+//  ctx.bezierCurveTo(20,80,40,102,75,120);
+//  ctx.bezierCurveTo(110,102,130,80,130,62.5);
+//  ctx.bezierCurveTo(130,62.5,130,25,100,25);
+//  ctx.bezierCurveTo(85,25,75,37,75,40);
+//  ctx.fill();
+    
+    
+//  function juxing(){
+//		ctx.save();
+//		ctx.beginPath();
+//		ctx.moveTo(200,200);
+//		ctx.lineTo(100,100);
+//		ctx.lineTo(300,100);
+//		ctx.lineTo(200,200);
+//		ctx.closePath();
+////		ctx.globalAlpha=0.2;
+////		ctx.fillStyle="red";
+////		ctx.fill();
+//		
+//		ctx.lineWidth="5";
+//		ctx.lineCap="round";
+//		ctx.strokeStyle="yellow";
+//		ctx.stroke();
+//		ctx.restore();
+//		
+//  }
+//  juxing();
+
+
+
+//虚线框
+//var offset = 0;
+//
+//function draw() {
+//ctx.clearRect(0,0, canvas.width, canvas.height);
+//ctx.save();
+//ctx.beginPath();
+//ctx.lineWidth="1";
+//ctx.strokeStyle="red";
+//ctx.stroke();
+//ctx.setLineDash([4, 2]);
+//ctx.lineDashOffset = offset;
+//ctx.strokeRect(100,100, 100, 100);
+//ctx.closePath();
+//ctx.restore();
+//}
+//
+//function march() {
+//offset++;
+//if (offset > 16) {
+//  offset = 0;
+//}
+//draw();
+//setTimeout(march, 20);
+//}
+//
+//march();
+
+
+
+//棋子
+function qizi(color){
+	ctx.save();
+	ctx.translate(200,200)
+	ctx.beginPath();
+	if(color==="black"){
+		var g=ctx.createRadialGradient(-20,-10,0,0,0,100);
+		g.addColorStop(0,'#fff');
+		g.addColorStop(0.2,'#000');
+		g.addColorStop(1,'#000');
+		ctx.fillStyle=g;
+	}else{
+		var g=ctx.createRadialGradient(-20,-10,0,0,0,100);
+		g.addColorStop(0,'#fff');
+		g.addColorStop(0.2,'#eee');
+		g.addColorStop(1,'#eee');
+		ctx.fillStyle=g;
+	}
+	ctx.arc(0,0,50,0,Math.PI*2);
+	ctx.shadowOffsetX = 2;
+	ctx.shadowOffsetY = 2;
+	ctx.shadowBlur = 2;
+	ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+	ctx.fill();
+	ctx.closePath();
+	ctx.restore();
+}
+qizi();
+
+
+
+//图片
+//function huatu(){
+//	var img=document.getElementById("tu");
+//	img.onload=function (){
+//		ctx.save();
+//		ctx.translate(200,200)
+//		ctx.beginPath();
+////		ctx.drawImage(img,0,0,100,100);
+//		ctx.drawImage(img,0,0,400,400,0,0,100,100);
+//		ctx.closePath();
+//		ctx.restore();
+//	}
+//	
+//}
+//huatu();
+
+
+//文字
+function zi(){
+	ctx.save();
+	ctx.translate(200,200)
+	
+	ctx.beginPath();
+	ctx.textAlign="center";
+  	ctx.textBaseline ="middle";
+	ctx.font = "48px serif";
+	ctx.fillStyle='red';
+	ctx.shadowOffsetX = 2;
+	ctx.shadowOffsetY = 2;
+	ctx.shadowBlur = 2;
+	ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+  	ctx.fillText("2", 0,0);
+	ctx.closePath();
+	
+	ctx.restore();
+	
+}
+zi();
+
+
+	
+</script>

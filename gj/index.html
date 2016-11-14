@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>作业-时钟</title>
+	</head>
+<style>
+	#canvas{
+		display:block;
+		position:absolute;
+		left:0;
+		top:0;
+		right:0;
+		bottom:0;
+		margin:auto;
+		border:1px solid #000;
+		border-radius: 50%;
+	}
+</style>
+	<body>
+		<canvas id="canvas" width="250" height="250"></canvas>
+	</body>
+</html>
+<script>
+	var canvas=document.getElementById("canvas");
+	var ctx=canvas.getContext('2d');
+	//钟表
+	function pan(){
+		ctx.save();
+		for(var i=0;i<60;i++){
+			ctx.beginPath();
+			if(i%5==0){
+				ctx.moveTo(0,-100);
+			}else{
+				ctx.moveTo(0,-115);
+			}
+			ctx.lineTo(0,-125);
+			ctx.closePath();
+			ctx.rotate(Math.PI/180*6)
+			ctx.stroke()
+		} 
+		ctx.restore();
+	}
+	function miaozhen(){
+		ctx.save();
+		var date=new Date();
+		var s=date.getSeconds();
+		ctx.rotate(Math.PI/180*6*s);
+	    ctx.beginPath();
+		ctx.arc(0,0,10,0,2*Math.PI);
+		ctx.moveTo(0,10);
+		ctx.lineTo(0,40);
+		ctx.moveTo(0,-10);
+		ctx.lineTo(0,-90)
+		ctx.closePath(); 
+		ctx.stroke();
+		ctx.restore();
+	}
+	function fenzhen(){
+		ctx.save();
+		var date=new Date();
+		var s=date.getSeconds();
+		var m=date.getMinutes();
+		var ss=(m*60+s)/10
+		ctx.rotate(Math.PI/180*ss);
+	    ctx.beginPath();
+		ctx.arc(0,0,10,0,2*Math.PI);
+		ctx.moveTo(0,10);
+		ctx.lineTo(0,34);
+		ctx.moveTo(0,-10);
+		ctx.lineTo(0,-70)
+		ctx.closePath(); 
+		ctx.stroke();
+		ctx.restore();
+	}
+		function shizhen(){
+		ctx.save();
+		var date=new Date();
+		var s=date.getSeconds();
+		var m=date.getMinutes();
+		var h=date.getHours()%12;
+		var hh=(h*3600+m*60+s)/120;
+		ctx.rotate(Math.PI/180 * hh);
+	    ctx.beginPath();
+		ctx.arc(0,0,10,0,2*Math.PI);
+		ctx.moveTo(0,10);
+		ctx.lineTo(0,24);
+		ctx.moveTo(0,-10);
+		ctx.lineTo(0,-50)
+		ctx.closePath(); 
+		ctx.stroke();
+		ctx.restore();
+	}
+	//music
+	var deg1=0;
+	function music(){
+		ctx.save();
+		ctx.beginPath();
+		ctx.rotate(Math.PI/180*deg1)
+		ctx.arc(0,-80,10,0,2*Math.PI);
+		ctx.closePath(); 		
+		ctx.fill();
+		ctx.restore();
+		ctx.save();
+		ctx.beginPath();
+		ctx.rotate(-Math.PI/2)
+		ctx.arc(0,0,80,0,Math.PI/180*deg1);
+		ctx.moveTo(0,-80);
+		ctx.closePath(); 
+		deg1+=6;
+		if(deg1==360){
+			deg1=0;
+		}
+		ctx.stroke();
+		ctx.restore();
+	}
+	//五角星
+	function wjx(x,y,r){
+		ctx.save();
+		ctx.translate(x,y);
+		ctx.beginPath();
+		ctx.scale(r,r);
+		for (var i = 0; i < 5; i++) {
+			ctx.lineTo(20,0);
+			ctx.rotate(Math.PI/180*144);
+		}			
+		ctx.closePath();
+		ctx.fillStyle="deeppink";
+		ctx.fill();
+		ctx.restore();
+  }
+		function render (){
+			ctx.clearRect(0,0,300,300);
+			ctx.save();
+			ctx.translate(125,125);
+			miaozhen();
+			fenzhen();
+			shizhen();
+			pan();
+			music();
+			ctx.restore();
+			ctx.save()
+			for(var i=0;i<50;i++){
+				var x=Math.floor(Math.random()*600+1);
+				var y=Math.floor(Math.random()*600+1);
+				var d=Math.random()+0.5;
+				wjx(x,y,d);
+			}
+           ctx.restore();
+
+		}
+		render();
+		setInterval(render,1000)
+</script>
